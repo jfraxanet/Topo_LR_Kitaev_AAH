@@ -11,6 +11,7 @@ jobs:
         architecture: 'x64'
     - name: Install the library
       run: |
+        pip install fastcore==1.0.9
         pip install nbdev jupyter
         pip install -e .
     - name: Read all notebooks
