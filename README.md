@@ -1,6 +1,5 @@
 # Toplogical properties of the long-range Kitaev chain in the presence of a Aubry-André-Harper modulation
 
-Use this template to more easily create your nbdev project.
 > While the physics and topological properties of the 1D short-range and long-range Kitaev chains in
 spatially homogeneous chemical potential are well understood, it is not the case for inhomogeneous
 potentials. In this paper we present a detailed study of the bulk topology at the central gap and
@@ -18,6 +17,6 @@ are dramatically affected by the long-range superconducting pairing, so that the
 weak bulk-boundary correspondence.
 
 ## Install
-pip install Topo_LR_Kitaev_AAH
+> pip install Topo_LR_Kitaev_AAH
 
 ## How to use
