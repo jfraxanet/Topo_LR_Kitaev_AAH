@@ -7,24 +7,21 @@ entries:
 - folders:
   - folderitems:
     - output: web,pdf
-      title: Export to modules
-      url: /export.html
+      title: Overview
+      url: /
     - output: web,pdf
-      title: Convert to html
-      url: /export2html.html
+      title: HAMILTONIANS
+      url: Hamiltonians.html
     - output: web,pdf
-      title: Show doc
-      url: /showdoc.html
+      title: WINDING NUMBER COMPUTATIONS
+      url: Winding_num.html
     - output: web,pdf
-      title: Test functions
-      url: /test.html
+      title: PLOTS AND OTHER FUNCTIONS
+      url: Plots.html
     - output: web,pdf
-      title: Core functions
-      url: /core.html
-    - output: web,pdf
-      title: Command line functions
-      url: /cli.html
+      title: LOCALIZATION
+      url: Localization.html
     output: web
-    title: Notebook
+    title: Topo_LR_Kitaev_AAH
   output: web
   title: Sidebar
