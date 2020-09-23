@@ -52,19 +52,10 @@ index = {"H_OBC_Kitaev_LR_QP": "01_Hamiltonians.ipynb",
          "compute_Kitaev_AA_wn_TKNN": "02_Winding_num.ipynb",
          "d_num_k_H_Kitaev_LR_QP_inf": "02_Winding_num.ipynb",
          "d_num_phase_H_Kitaev_LR_QP_inf": "02_Winding_num.ipynb",
-         "compute_Kitaev_AA_wn_TKNN_inf": "02_Winding_num.ipynb",
-         "plot_general": "03_Plots.ipynb",
-         "plot_IPR": "03_Plots.ipynb",
-         "plot_av": "03_Plots.ipynb",
-         "HistogramNormalize": "03_Plots.ipynb",
-         "plot_wf": "03_Plots.ipynb",
-         "IPR_NPR": "04_Localization.ipynb",
-         "energy_level_statistics": "04_Localization.ipynb"}
+         "compute_Kitaev_AA_wn_TKNN_inf": "02_Winding_num.ipynb"}
 
 modules = ["Hamiltonians.py",
-           "Winding_num.py",
-           "plots.py",
-           "Localization.py"]
+           "Winding_num.py"]
 
 doc_url = "https://jfraxanet.github.io/Topo_LR_Kitaev_AAH/"
 
