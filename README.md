@@ -8,7 +8,7 @@
 
 ## How to use
 
-```python
+```
 from Topo_LR_Kitaev_AAH.Hamiltonians import *
 from Topo_LR_Kitaev_AAH.Winding_num import *
 ```

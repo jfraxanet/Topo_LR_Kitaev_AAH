@@ -1,7 +1,7 @@
 {
   "Topo_LR_Kitaev_AAH": {
     "Overview": "/",
-    "HAMILTONIANS": "Hamiltonians.html",
-    "WINDING NUMBER COMPUTATIONS": "Winding_num.html"
+    "HAMILTONIANS": "/Hamiltonians",
+    "WINDING NUMBER COMPUTATIONS": "/Winding_num"
   }
 }
