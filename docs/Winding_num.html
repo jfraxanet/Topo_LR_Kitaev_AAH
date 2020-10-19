@@ -36,43 +36,24 @@ sidebar: home_sidebar
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="1.-FUKUI-METHOD">1. FUKUI METHOD<a class="anchor-link" href="#1.-FUKUI-METHOD"> </a></h1><p>The steps to compute the winding number are the following:</p>
+<h1 id="1.-FUKUI-HATSUGAI-SUZUKI-ALGORITHM">1. FUKUI-HATSUGAI-SUZUKI ALGORITHM<a class="anchor-link" href="#1.-FUKUI-HATSUGAI-SUZUKI-ALGORITHM"> </a></h1><p>The steps to compute the winding number are the following:</p>
 <ol>
-<li><p>We discretize the BZ of the system. We need to take into account that k can take values that depend on the size of the system. Therefore, if L is the number of supercells of our system, K takes the following values = $\frac{2\pi m}{L} + \frac{\pi}{L}$ where $m = \{1, ..., L\}$. We have to make sure that the system is large enough, hence the discretization of BZ is small enough. We obtain a list $\{k_0, k_2, ..., k_{L-1}\}$. To be sure that we are not missing a phase, we can add a small value $\delta$ to the sequence.</p>
+<li><p>We discretize the BZ of the system. We need to take into account that k can take values that depend on the size of the system. Therefore, if L is the number of supercells of our system, K takes the following values = $\frac{2\pi m}{L} + \frac{\pi}{L}$ where $m = \{1, ..., L\}$. We have to make sure that the system is large enough, hence the discretization of BZ is small enough. We obtain a list $\{k_0, k_2, ..., k_{L-1}\}$. To be sure that we are not missing a phase, we can add a small value $\delta$ to the sequence. For the infinite system, we can choose any discretization.</p>
 </li>
-<li><p>For every $k_i$, we take the Hamitlonian at $k$ and $k_{i+1}$ and diagonalize it. We want to take all the eigenvectors that correspond to energies below zero (or above zero). Since the matrix is $2F_n\times 2F_n$ and the spectrum is symmetric, we will take $F_n$ eigenvectors. If we take ALL the eigenvectors, we should obtain a winding number of $0$. When we reach the last value of $k_i$, we need to impose periodic boundary conditions and therefore connect it to the first value of the chain.</p>
+<li><p>For every $k_i$, we take the Hamitlonian at $k$ and $k_{i+1}$ and diagonalize it. We want to take all the eigenvectors that correspond to energies below zero (or above zero). Since the matrix is $2q\times 2q$ and the spectrum is symmetric, we will take $q$ eigenvectors. If we take ALL the eigenvectors, we should obtain a winding number of $0$. When we reach the last value of $k_i$, we need to impose periodic boundary conditions and therefore connect it to the first value of the chain.</p>
 </li>
-<li><p>For every $k_i$, we create a $F_n\times F_n$ tensor, $Ui$ such that:
+<li><p>For every $k_i$, we create a $q\times q$ tensor, $U^{(i)}$ such that:
 \begin{equation}
-Ui_{l,j} = &lt;\psi_{k+1}(l) \mid \psi_k(j)&gt;,
+U^{(i)}_{m,n} = \langle \psi_m(k_{i+1})\vert\psi_n (k_i) \rangle
 \end{equation}
-and, we define $U_i$ as follows
-\begin{equation}
-U_i = \frac{\mid Ui \mid}{\sqrt{\mid Ui \mid \mid Ui \mid^*} }
-\end{equation}</p>
+Here $\psi_{m(n)}$ is the $m (n)$-th eigenvector of the Hamiltonian.</p>
 </li>
 </ol>
-<p>Finally, we will compute:
+<p>Finally, we will compute: 
 \begin{equation}
- F = Im \left[ \log \left(\prod_i U_i\right)\right]
+ \nu = \frac{1}{\pi} \text{Im} \left[ \log \left(\prod_{i=1}^s  \frac{\vert U^{(i)}\vert}{\sqrt{\vert U^{(i)} \vert \vert U^{(i)} \vert^*}}\right)\right]
 \end{equation}</p>
-<p>For the long-range systems, we find that it is not posible to close the loop because of a discontinuity at $2\pi$ or $0$ and therefore we can only use that without closing the loop and we obtain a Gauge dependent quantity.</p>
-<p>For the two-band system, the algorithm is a bit simpler:</p>
-<ol>
-<li><p>We discretize the BZ of the system. We need to take into account that k can take values that depend on the size of the system. Therefore, if N is the number of supercells of our system, K takes the following values = $\frac{2\pi m}{L} + \frac{\pi}{L}$ where $m = \{1, ..., L\}$. If we have an infinite system we are in the continuum. For a finite system, we have to make sure that the system is large enough, hence the discretization of BZ is small enough. We obtain a list $\{k_0, k_2, ..., k_{L-1}\}$.</p>
-</li>
-<li><p>For every $k_i$, we take the Hamitlonian at $k$ and $k_{i+1}$ and diagonalize it. We take one energy band. When we reach the last value of $k_i$, we need to impose periodic boundary conditions and therefore connect it to the first value of the chain.</p>
-</li>
-<li><p>For every $k_i$, we compute:
-\begin{equation}
-U_i = &lt;\psi_{k_{i+1}} \mid \psi_{k_i}&gt;,
-\end{equation}</p>
-</li>
-</ol>
-<p>Then, the Chern number is defined as:
-\begin{equation}
- F = Im \left[ \log \left(\sum_i U_i\right)\right]
-\end{equation}</p>
+<p>For the long-range systems, it is not possible to obtain half-integer winding numbers if we close the loop. Nevertheless, without closing the loop  we obtain a Gauge dependent quantity.</p>
 
 </div>
 </div>
@@ -95,9 +76,9 @@ U_i = &lt;\psi_{k_{i+1}} \mid \psi_{k_i}&gt;,
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Fukui_Kitaev_LR_QP_wn" class="doc_header"><code>Fukui_Kitaev_LR_QP_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fukui_Kitaev_LR_QP_wn</code>(<strong><code>params</code></strong>, <strong><code>k_l</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>close_loop</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="Fukui_Kitaev_LR_QP_wn" class="doc_header"><code>Fukui_Kitaev_LR_QP_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fukui_Kitaev_LR_QP_wn</code>(<strong><code>params</code></strong>, <strong><code>k_l</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>close_loop</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
-<p>Compute the winding number using Fukui for the finite QP LR Kitaev chain</p>
+<p>Compute the winding number using Fukui for the finite AAH-LR Kitaev chain</p>
 
 </div>
 
@@ -120,87 +101,9 @@ U_i = &lt;\psi_{k_{i+1}} \mid \psi_{k_i}&gt;,
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Fukui_Kitaev_LR_QP_inf_wn" class="doc_header"><code>Fukui_Kitaev_LR_QP_inf_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L54" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fukui_Kitaev_LR_QP_inf_wn</code>(<strong><code>params</code></strong>, <strong><code>k_l</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>close_loop</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="Fukui_Kitaev_LR_QP_inf_wn" class="doc_header"><code>Fukui_Kitaev_LR_QP_inf_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L52" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fukui_Kitaev_LR_QP_inf_wn</code>(<strong><code>params</code></strong>, <strong><code>k_l</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>close_loop</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
-<p>Compute the winding number using Fukui for the infinite QP LR Kitaev chain</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="Fukui_Kitaev_twoband_analytic" class="doc_header"><code>Fukui_Kitaev_twoband_analytic</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L90" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fukui_Kitaev_twoband_analytic</code>(<strong><code>params</code></strong>, <strong><code>k_l</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>close_loop</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-<p>Compute the winding number using Fukui for the infinite
-two-band Kitaev chain using the analytic expression for the evecs.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="Fukui_Kitaev_AA_2D_wn" class="doc_header"><code>Fukui_Kitaev_AA_2D_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L123" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fukui_Kitaev_AA_2D_wn</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>list_kx</code></strong>, <strong><code>list_ky</code></strong>, <strong><code>energy_gap</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-<p>Compute the winding number using Fukui for the AA modes of the LR QP Kitaev chain (finite).
-Here kx is the momentum and ky is the phase of the AA chemical potential.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="Fukui_Kitaev_AA_2D_wn_inf" class="doc_header"><code>Fukui_Kitaev_AA_2D_wn_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L177" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fukui_Kitaev_AA_2D_wn_inf</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>delta_kx</code></strong>, <strong><code>delta_ky</code></strong>, <strong><code>energy_gap</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-<p>Compute the winding number using Fukui for the AA modes of the LR QP Kitaev chain (infinite).
-Here kx is the momentum and ky is the phase of the AA chemical potential.</p>
+<p>Compute the winding number using Fukui for the infinite AAH-LR Kitaev chain</p>
 
 </div>
 
@@ -214,7 +117,136 @@ Here kx is the momentum and ky is the phase of the AA chemical potential.</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="2.-REAL-SPACE-WINDING-NUMBER">2. REAL SPACE WINDING NUMBER<a class="anchor-link" href="#2.-REAL-SPACE-WINDING-NUMBER"> </a></h1><p>Here we compute the winding number as follows:</p>
+<p>This algorithm can also be used to compute the chern number corresponding to the AAH edge states at higher energy gaps.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">Fukui_Kitaev_AA_2D_chern</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">list_kx</span><span class="p">,</span> <span class="n">list_ky</span><span class="p">,</span> <span class="n">energy_gap</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    
+    <span class="sd">&#39;&#39;&#39;Compute the Chern number using Fukui for the AAH modes of the LR AAH Kitaev chain (finite). </span>
+<span class="sd">    Here kx is the momentum and ky is the phase of the AAH chemical potential.&#39;&#39;&#39;</span>
+
+    <span class="n">Fn</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;Fn&#39;</span><span class="p">]</span>
+
+    <span class="n">delta_kx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">L</span>
+    <span class="n">delta_ky</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">L</span>
+    <span class="n">deltas</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">delta_kx</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta_ky</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">delta_kx</span><span class="p">,</span> <span class="n">delta_ky</span><span class="p">])]</span>
+
+    <span class="n">sum_F</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">F_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">list_kx</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_ky</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_kx</span><span class="p">)):</span>
+        <span class="n">kx</span> <span class="o">=</span> <span class="n">list_kx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>    
+        
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_ky</span><span class="p">)):</span> 
+
+            <span class="n">ky</span> <span class="o">=</span> <span class="n">list_ky</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">kx</span><span class="p">,</span><span class="n">ky</span><span class="p">])</span> 
+            
+            <span class="n">U</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">delta1</span><span class="p">,</span> <span class="n">delta2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">zero</span><span class="p">,</span><span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">deltas</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">deltas</span><span class="p">[</span><span class="mi">1</span><span class="p">]],[</span><span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">deltas</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zero</span><span class="p">]):</span>
+                
+                <span class="n">k1</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="n">delta1</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H_Kitaev_LR_QP</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">k1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">rot</span><span class="p">))</span>
+                <span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">evecs1</span> <span class="o">=</span> <span class="n">evecs</span><span class="p">[</span><span class="n">evals</span><span class="o">&lt;</span><span class="n">energy_gap</span><span class="p">]</span>
+
+                <span class="n">k2</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="n">delta2</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H_Kitaev_LR_QP</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">k2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">rot</span><span class="p">))</span>
+                <span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">evecs2</span> <span class="o">=</span> <span class="n">evecs</span><span class="p">[</span><span class="n">evals</span><span class="o">&lt;</span><span class="n">energy_gap</span><span class="p">]</span>        
+
+                <span class="n">Ui</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">evecs1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">evecs2</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">U</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Ui</span><span class="p">),</span>  <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+                    <span class="n">U</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">Ui</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">U</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">Ui</span>
+                    
+            <span class="n">F_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+            <span class="n">F_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">F_k</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span>
+            <span class="n">sum_F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sum_F</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">F_k</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+    
+    <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum_F</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">F</span><span class="p">,</span> <span class="n">F_list</span>
+
+
+<span class="k">def</span> <span class="nf">Fukui_Kitaev_AA_2D_chern_inf</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">delta_kx</span><span class="p">,</span> <span class="n">delta_ky</span><span class="p">,</span> <span class="n">energy_gap</span><span class="p">,</span> <span class="n">rot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    
+    <span class="sd">&#39;&#39;&#39;Compute the Chern number using Fukui for the AAH modes of the LR AAH Kitaev chain (infinite). </span>
+<span class="sd">    Here kx is the momentum and ky is the phase of the AAH chemical potential.&#39;&#39;&#39;</span>
+
+    <span class="n">Fn</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;Fn&#39;</span><span class="p">]</span>
+
+    <span class="n">list_ky</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">delta_ky</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">delta_ky</span><span class="p">)</span>
+    <span class="n">list_kx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">delta_kx</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">delta_kx</span><span class="p">)</span>
+    <span class="n">deltas</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">delta_kx</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta_ky</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">delta_kx</span><span class="p">,</span> <span class="n">delta_ky</span><span class="p">])]</span>
+
+    <span class="n">sum_F</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">F_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">list_kx</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_ky</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_kx</span><span class="p">)):</span>
+        <span class="n">kx</span> <span class="o">=</span> <span class="n">list_kx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>    
+        
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_ky</span><span class="p">)):</span> 
+
+            <span class="n">ky</span> <span class="o">=</span> <span class="n">list_ky</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">kx</span><span class="p">,</span><span class="n">ky</span><span class="p">])</span> 
+            
+            <span class="n">U</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">delta1</span><span class="p">,</span> <span class="n">delta2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">zero</span><span class="p">,</span><span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">deltas</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">deltas</span><span class="p">[</span><span class="mi">1</span><span class="p">]],[</span><span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">deltas</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zero</span><span class="p">]):</span>
+                
+                <span class="n">k1</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="n">delta1</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H_Kitaev_LR_QP_inf</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">k1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="p">,</span> <span class="n">rot</span><span class="p">))</span>
+                <span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">evecs1</span> <span class="o">=</span> <span class="n">evecs</span><span class="p">[</span><span class="n">evals</span><span class="o">&lt;</span><span class="n">energy_gap</span><span class="p">]</span>
+
+                <span class="n">k2</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="n">delta2</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H_Kitaev_LR_QP_inf</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">k2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="p">,</span> <span class="n">rot</span><span class="p">))</span>
+                <span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">evecs2</span> <span class="o">=</span> <span class="n">evecs</span><span class="p">[</span><span class="n">evals</span><span class="o">&lt;</span><span class="n">energy_gap</span><span class="p">]</span>        
+
+                <span class="n">Ui</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">evecs1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">evecs2</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">U</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Ui</span><span class="p">),</span>  <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+                    <span class="n">U</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">Ui</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">U</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">Ui</span>
+                    
+            <span class="n">F_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+            <span class="n">F_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">F_k</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span>
+            <span class="n">sum_F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sum_F</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">F_k</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+    
+    <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum_F</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">F</span><span class="p">,</span> <span class="n">F_list</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="2.-REAL-SPACE-WINDING-NUMBER">2. REAL-SPACE WINDING NUMBER<a class="anchor-link" href="#2.-REAL-SPACE-WINDING-NUMBER"> </a></h1><p>Here we compute the winding number as follows:</p>
 \begin{equation}
 w = Tr\left[Q_{BA}[X, Q_{AB}]\right]
 \end{equation}<p>where $Tr$ is the trace per unit cell. Here, $Q = P_{+}-P_{-}$:</p>
@@ -230,7 +262,7 @@ P_{\pm} = \sum_{\pm} \mid \psi_{\pm} &gt;&lt; \psi_{\pm}\mid
 0 &amp; 0 &amp; 0 &amp; 0 &amp; .. \\
 \end{pmatrix}.
 \end{equation}\begin{equation}
-\Gamma_A = 
+\Gamma_B = 
 \begin{pmatrix}
 0 &amp; 0 &amp; 0 &amp; 0 &amp; .. \\
 0 &amp; 1 &amp; 0 &amp; 0 &amp; .. \\
@@ -263,7 +295,7 @@ P_{\pm} = \sum_{\pm} \mid \psi_{\pm} &gt;&lt; \psi_{\pm}\mid
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Real_space_Kitaev_LR_QP_wn" class="doc_header"><code>Real_space_Kitaev_LR_QP_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Real_space_Kitaev_LR_QP_wn</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="Real_space_Kitaev_LR_QP_wn" class="doc_header"><code>Real_space_Kitaev_LR_QP_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L89" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Real_space_Kitaev_LR_QP_wn</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Compute the real space winding number for the QP LR Kitaev chain.
 We use the real space Hamiltonian with APBC.</p>
@@ -280,26 +312,20 @@ We use the real space Hamiltonian with APBC.</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="3-CHIRAL-SYMMETRY-WINDING-NUMBER-COMPUTATION">3 CHIRAL SYMMETRY WINDING NUMBER COMPUTATION<a class="anchor-link" href="#3-CHIRAL-SYMMETRY-WINDING-NUMBER-COMPUTATION"> </a></h1><p>First, one has to find the basis where the chiral Hamiltonian has an off-diagonal form $H = \begin{pmatrix} 0 &amp; h \\ h^\dagger &amp;0\end{pmatrix}$ and the chiral operator has the form $\Gamma = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}$. For this model, the latter can be done by considering applying the rotation $R_y = e^{i\sigma_y \frac{\pi}{2}}$ and considering the basis $\chi_k^q= \left(c_{k,0},  c_{k, 1}, ..., c_{k, q-1}, c^\dagger_{-k,0}, c^\dagger_{-k, 1}, ..., c^\dagger_{-k, q-1})\right)^T$.</p>
-<p>Then, we take the upper-right block, $h$. The winding number will be given by:</p>
+<h1 id="3.-INFINITE-SYSTEM-WINDING-NUMBER">3. INFINITE SYSTEM WINDING NUMBER<a class="anchor-link" href="#3.-INFINITE-SYSTEM-WINDING-NUMBER"> </a></h1><p>First, one has to find the basis where the chiral Hamiltonian has an off-diagonal form $H = \begin{pmatrix} 0 &amp; h \\ h^\dagger &amp;0\end{pmatrix}$ and the chiral operator has the form $\Gamma = \begin{pmatrix} \mathbb{1} &amp; 0 \\ 0 &amp; -\mathbb{1} \end{pmatrix}$. For this model, the latter can be done by transforming the Hamiltonian $H$ as follows</p>
 \begin{equation}
-    w = \int_0^{2\pi} \frac{1}{2\pi i} Tr\left[h^{-1}\delta_k h\right] 
+H' = R_y H R_y^\dagger 
+\end{equation}<p>where $R_y = e^{i\sigma_y \frac{\pi}{2}}$. Moreover, we perform a rotation in order to rearrange the basis to the following form</p>
+\begin{equation}
+\chi_k' = \left(c_{k,0},  ..., c_{k, q-1}, c^\dagger_{-k,0}, ..., c^\dagger_{-k, q-1}\right)^T.
+\end{equation}<p>Then, we take the upper-right block, $h$. The winding number will be given by:</p>
+\begin{equation}
+    w = \int_0^{2\pi} \frac{1}{2\pi i} Tr\left[h^{-1}\delta_k h\right],
 \end{equation}<p>or in the discrete version:</p>
 \begin{equation}
-    w = \sum_k \frac{1}{L} Tr\left[h^{-1}\delta_k h\right] 
-\end{equation}<p>where $k = \frac{(2m+1)\pi}{L}$, $m\in \{0, ..., L-1\}$.</p>
-<p>There is a problem when we try to compute the derivative of the Hamiltonian using an analytical approach. Let's see it for the two-band system, comparing the infinite case and the finite case.</p>
-<h3 id="Finite-case">Finite case<a class="anchor-link" href="#Finite-case"> </a></h3>\begin{equation}
-h = -\mu + t\cos(k) - i\sum_{l=1}^{L} \frac{\Delta}{d^\alpha} \sin(kl)
-\end{equation}<p>where $d = min(l, L-l)$ because of the anti-periodic boundary conditions. Note that $kl$ should be between $0$ and $2\pi$ but that is not the case. When we do the derivative, $l$ gets outside of the sin function and the result is not well defined. We tried using a new definition of $l$ such that $0&lt;kl&lt;2\pi$ $\rightarrow$ $0&lt;l&lt;\frac{2L}{2m+1}$  $\rightarrow$ $l_{new} = l_{old} \text{mod} \frac{2L}{2m+1}$.</p>
-<h3 id="Infinite-case">Infinite case<a class="anchor-link" href="#Infinite-case"> </a></h3><p>Here the derivative is well defined since it is expressed in terms of the Polylog functions:
-\begin{equation}
-h = -\mu + t\cos(k) + \frac{\Delta}{2} (\text{Polylog}(\alpha,e^{ik})-\text{Polylog}(\alpha, e^{-ik}))
-\end{equation}</p>
-<p>On the other hand, we can compute the numerical derivative by taking the difference:</p>
-\begin{equation}
-dh = \frac{h(k+2\pi/L)-h(k)}{2\pi/L}
-\end{equation}
+    w = \sum_k \frac{1}{L} Tr\left[h^{-1}\delta_k h\right].
+\end{equation}<p>We can consider the finite Hamiltonian, for which we have to choose the values of $k$ accordingly, and then take the numerical derivative of the Hamiltonian. The other opcion that is used for the paper is to take the infinite Hamiltonian and its the analytical derivative.</p>
+
 </div>
 </div>
 </div>
@@ -321,39 +347,7 @@ dh = \frac{h(k+2\pi/L)-h(k)}{2\pi/L}
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Chiral_transf" class="doc_header"><code>Chiral_transf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L270" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Chiral_transf</code>(<strong><code>H_k</code></strong>)</p>
-</blockquote>
-<p>Transform H_Kitaev_QP_LR to the Chiral basis, block-off diagonal Hamiltonian</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_h_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_h_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L296" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_h_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
+<h4 id="d_num_h_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_h_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L138" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_h_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
 </blockquote>
 <p>Numerical derivative of one block of the off-diagonal Hamiltonian in momentum
 space for the finite system.</p>
@@ -379,7 +373,7 @@ space for the finite system.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_h_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_h_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L296" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_h_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
+<h4 id="d_num_h_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_h_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L138" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_h_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
 </blockquote>
 <p>Numerical derivative of one block of the off-diagonal Hamiltonian in momentum
 space for the finite system.</p>
@@ -405,7 +399,7 @@ space for the finite system.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="w" class="doc_header"><code>w</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>w</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>num</code></strong>, <strong><code>inf</code></strong>, <strong><code>AA</code></strong>, <strong><code>H_pbc_delta</code></strong>, <strong><code>d_H_pbc_delta</code></strong>)</p>
+<h4 id="w" class="doc_header"><code>w</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L150" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>w</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>num</code></strong>, <strong><code>inf</code></strong>, <strong><code>AA</code></strong>, <strong><code>H_pbc_delta</code></strong>, <strong><code>d_H_pbc_delta</code></strong>)</p>
 </blockquote>
 <p>Compute the relative phase for a given value of k using the definition.
 We can choose whether to use the numerical or analytical derivative for the infinite system.</p>
@@ -431,7 +425,7 @@ We can choose whether to use the numerical or analytical derivative for the infi
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Chiral_Kitaev_QP_LR_wn" class="doc_header"><code>Chiral_Kitaev_QP_LR_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L334" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Chiral_Kitaev_QP_LR_wn</code>(<strong><code>params</code></strong>, <strong><code>vec_mu</code></strong>, <strong><code>veck</code></strong>, <strong><code>inf</code></strong>=<em><code>True</code></em>, <strong><code>L</code></strong>=<em><code>0</code></em>, <strong><code>num</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="Chiral_Kitaev_QP_LR_wn" class="doc_header"><code>Chiral_Kitaev_QP_LR_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L176" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Chiral_Kitaev_QP_LR_wn</code>(<strong><code>params</code></strong>, <strong><code>vec_mu</code></strong>, <strong><code>veck</code></strong>, <strong><code>inf</code></strong>=<em><code>True</code></em>, <strong><code>L</code></strong>=<em><code>0</code></em>, <strong><code>num</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Compute the winding number using the definition for Hamiltonians
 with Chiral symmetry given a discretization. Both for the infinite and finite system.</p>
@@ -448,131 +442,18 @@ with Chiral symmetry given a discretization. Both for the infinite and finite sy
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="TWO-BAND">TWO BAND<a class="anchor-link" href="#TWO-BAND"> </a></h3>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_h_Kitaev_twoband" class="doc_header"><code>d_num_h_Kitaev_twoband</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L373" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_h_Kitaev_twoband</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>rotation</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-<p>Compute the forward numerical derivative of one block of the off-diagonal form of two band
-momentum Hamiltonian with APBC for the Kitaev chain. Finite system.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_h_Kitaev_twoband_inf" class="doc_header"><code>d_num_h_Kitaev_twoband_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L387" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_h_Kitaev_twoband_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>delta_k</code></strong>=<em><code>0.01</code></em>, <strong><code>rotation</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-<p>Compute the forward numerical derivative of one block of the off-diagonal form of two band
-momentum Hamiltonian with APBC for the Kitaev chain. Infinite system.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="w_TB" class="doc_header"><code>w_TB</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L401" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>w_TB</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>inf</code></strong>, <strong><code>num</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="Chiral_twoband_Kitaev_wn" class="doc_header"><code>Chiral_twoband_Kitaev_wn</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L422" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Chiral_twoband_Kitaev_wn</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>veck</code></strong>, <strong><code>inf</code></strong>=<em><code>True</code></em>, <strong><code>L</code></strong>=<em><code>0</code></em>, <strong><code>num</code></strong>=<em><code>False</code></em>)</p>
-</blockquote>
-<p>Compute the winding number using the definition for Hamiltonians
-with Chiral symmetry given a discretization. Both for the two-band infinite and finite system.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-TKNN-FORUMLA">4. TKNN FORUMLA<a class="anchor-link" href="#4.-TKNN-FORUMLA"> </a></h2><p>In order to compute the winding number for the AA modes using the TKNN formula, we need to consider a discretization of the BZ in 2D (kx being k and ky is the phase, as we do it for the 2D Fukui method).Then, the berry curvature for each square is computed as follows:</p>
+<h2 id="4.-THOULESS-KOHMOTO-NIGHTINGALE-NIJS-(TKNN)-ALGORITHM">4. THOULESS-KOHMOTO-NIGHTINGALE-NIJS (TKNN) ALGORITHM<a class="anchor-link" href="#4.-THOULESS-KOHMOTO-NIGHTINGALE-NIJS-(TKNN)-ALGORITHM"> </a></h2><p>In order to compute the winding number for the AAH edge states, we use the the Thouless-Kohmoto-Nightingale-Nijs (TKNN) algorithm, where they define the Berry curvature as follows</p>
 \begin{equation}
-    F_{k_x, k_y} = \frac{i}{A}\sum_{E_{\alpha}&lt;E_F} \sum_{E_{\beta}&gt;E_F} \frac{(\frac{\partial H}{\partial k_x})_{\alpha\beta}(\frac{\partial H}{\partial k_y})_{\beta\alpha}-(\frac{\partial H}{\partial k_y})_{\alpha\beta}(\frac{\partial H}{\partial k_x})_{\beta\alpha}}{E_{\alpha}-E_{\beta})^2},
-\end{equation}<p>where:
+    \Omega_{k_x k_y} = i\sum_{\substack{E_{\alpha}&lt;E_F \\ E_{\beta}&gt;E_F}} \frac{\partial_{k_x} H_{\alpha\beta}\partial_{k_y} H_{\beta\alpha}-\partial_{\partial k_y} H_{\alpha\beta}\partial_{k_x} H_{\beta\alpha}}{(E_{\alpha}-E_{\beta})^2},
+\end{equation}<p>where $k_x$ and $k_y$ are quasi-momenta of the Brillouin zone. Recall that here, $k_x = k$ and $k_y = \phi$. We choose the value of the Fermi energy $E_F$ to be located inside the gap that we want to characterize. Note that</p>
 \begin{equation}
-    (\frac{\partial H}{\partial k_x})_{\alpha\beta} = &lt;\psi_{E_{\alpha}}\mid \frac{\partial H}{\partial k_x} \mid \psi_{E_{\beta}}&gt;
-\end{equation}</p>
-<p>and $A$ is the area of the square. Then, the winding number is:
+    \partial_{ k_x} H_{\alpha\beta} = \langle\psi_\alpha\vert \partial_{k_x} H  \vert \psi_\beta\rangle
+\end{equation}<p>The Chern number is defined as</p>
 \begin{equation}
-    wn = \frac{1}{2\pi}\sum_{k_x} \sum_{k_y} Im( F_{k_x, k_y}).
+C= \frac{1}{2\pi i}\int_\text{BZ} \Omega_{k_x k_y}.
+\end{equation}<p>We here discretize the integral as a Riemann sum
+\begin{equation}
+    C = \frac{1}{2\pi i}\sum_{k_x,k_y}  \Omega_{k_x k_y} \Delta k_x \Delta k_y,
 \end{equation}</p>
 
 </div>
@@ -602,7 +483,7 @@ with Chiral symmetry given a discretization. Both for the two-band infinite and 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_k_H_Kitaev_LR_QP" class="doc_header"><code>d_num_k_H_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L434" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_k_H_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
+<h4 id="d_num_k_H_Kitaev_LR_QP" class="doc_header"><code>d_num_k_H_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L215" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_k_H_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
 </blockquote>
 <p>Numerical forward derivative of the Hamiltonian in k in momentum space with APBC.</p>
 
@@ -627,9 +508,9 @@ with Chiral symmetry given a discretization. Both for the two-band infinite and 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_phase_H_Kitaev_LR_QP" class="doc_header"><code>d_num_phase_H_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L444" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_phase_H_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
+<h4 id="d_num_phase_H_Kitaev_LR_QP" class="doc_header"><code>d_num_phase_H_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L225" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_phase_H_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>AA</code></strong>)</p>
 </blockquote>
-<p>Numerical forward derivative of the Hamiltonian in k in momentum space with APBC.</p>
+<p>Numerical forward derivative of the Hamiltonian in the phase phi in momentum space with APBC.</p>
 
 </div>
 
@@ -652,9 +533,9 @@ with Chiral symmetry given a discretization. Both for the two-band infinite and 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="compute_Kitaev_AA_wn_TKNN" class="doc_header"><code>compute_Kitaev_AA_wn_TKNN</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L455" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compute_Kitaev_AA_wn_TKNN</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>list_kx</code></strong>, <strong><code>list_ky</code></strong>, <strong><code>energy_gap</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="compute_Kitaev_AA_wn_TKNN" class="doc_header"><code>compute_Kitaev_AA_wn_TKNN</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L236" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compute_Kitaev_AA_wn_TKNN</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>L</code></strong>, <strong><code>list_kx</code></strong>, <strong><code>list_ky</code></strong>, <strong><code>energy_gap</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
-<p>Compute the winding number for the AA modes of the LR QP Kitaev chain</p>
+<p>Compute the winding number for the AAH modes of the LR Kitaev chain</p>
 
 </div>
 
@@ -690,7 +571,7 @@ with Chiral symmetry given a discretization. Both for the two-band infinite and 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_k_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_k_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L501" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_k_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>delta_k</code></strong>=<em><code>0.1</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="d_num_k_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_k_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L282" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_k_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>delta_k</code></strong>=<em><code>0.1</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Numerical forward derivative of the Hamiltonian in k in momentum space with APBC.</p>
 
@@ -715,9 +596,9 @@ with Chiral symmetry given a discretization. Both for the two-band infinite and 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_num_phase_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_phase_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L511" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_phase_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>delta_ph</code></strong>=<em><code>0.1</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="d_num_phase_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_num_phase_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L292" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_num_phase_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>kx</code></strong>, <strong><code>mu</code></strong>, <strong><code>delta_ph</code></strong>=<em><code>0.1</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
-<p>Numerical forward derivative of the Hamiltonian in k in momentum space with APBC.</p>
+<p>Numerical forward derivative of the Hamiltonian in the phase phi in momentum space with APBC.</p>
 
 </div>
 
@@ -740,9 +621,9 @@ with Chiral symmetry given a discretization. Both for the two-band infinite and 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="compute_Kitaev_AA_wn_TKNN_inf" class="doc_header"><code>compute_Kitaev_AA_wn_TKNN_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L522" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compute_Kitaev_AA_wn_TKNN_inf</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>list_kx</code></strong>, <strong><code>list_ky</code></strong>, <strong><code>energy_gap</code></strong>, <strong><code>num</code></strong>=<em><code>False</code></em>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="compute_Kitaev_AA_wn_TKNN_inf" class="doc_header"><code>compute_Kitaev_AA_wn_TKNN_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Winding_num.py#L303" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compute_Kitaev_AA_wn_TKNN_inf</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>list_kx</code></strong>, <strong><code>list_ky</code></strong>, <strong><code>energy_gap</code></strong>, <strong><code>num</code></strong>=<em><code>False</code></em>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
-<p>Compute the winding number for the AA modes of the infinite LR QP Kitaev chain</p>
+<p>Compute the winding number for the AAH modes of the infinite LR Kitaev chain</p>
 
 </div>
 
