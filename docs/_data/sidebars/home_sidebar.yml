@@ -11,10 +11,10 @@ entries:
       url: /
     - output: web,pdf
       title: HAMILTONIANS
-      url: /Hamiltonians
+      url: Hamiltonians.html
     - output: web,pdf
       title: WINDING NUMBER COMPUTATIONS
-      url: /Winding_num
+      url: Winding_num.html
     output: web
     title: Topo_LR_Kitaev_AAH
   output: web
