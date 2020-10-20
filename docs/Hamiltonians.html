@@ -40,7 +40,7 @@ nb_path: "nbs/01_Hamiltonians.ipynb"
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In order to obtain the Hamiltonian in the momentum space, we start from the follwing Hamiltonian:</p>
 \begin{equation}
-    H =\sum_{i=0}^{N-1} \biggl[-t (c^\dagger_{i+1}c_{i} + c^\dagger_{i}c_{i+1}\right) - \mu f(i)\left ( 2c^\dagger_{i}c_{i}-1)
+    H =\sum_{i=0}^{N-1} \biggl[-t (c^\dagger_{i+1}c_{i} + c^\dagger_{i}c_{i+1}) - \mu f(i)(2c^\dagger_{i}c_{i}-1)
     +\sum_{l=1}^{N-1}\frac{\Delta}{l^\alpha}(c^\dagger_{i+l}c^\dagger_{i} + c_{i}c_{i+l})\biggl],
 \end{equation}<p>where $t$ is the hopping amplitude, $\mu$ is the chemical potential, $\Delta$ is the superconducting pairing amplitude and $c_{i}(c^\dagger_{i})$ are the annihilation (creation) operators at the $i$-th site of the chain. The superconducting pairing is taken to decay as a power law $l^{-\alpha}$, where $l$ denotes the distance between the sites and the scaling exponent $\alpha \in \mathbb{R}$. For a constant chemical potential $f(i)=1$, we recover the long-range Kitaev chain with homogeneous onsite potential. The AAH chemical potential corresponds to $f(i) = \cos\left (2 \pi n \frac{F_{n-1}}{F_{n}} + \phi \right )$, where $F_{n-1},F_n$ are integers from the Fibonacci sequence and $\phi$ is the phase. Therefore, our Hamiltonian has a periodicity of $F_n = q$ sites.</p>
 
@@ -164,8 +164,8 @@ with any value of alpha, Fn1/Fn and finite length. Here we use the Majorana basi
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since the system has a periodicity of $q$ sites, we can split it into supercells. Let's consider that we have $L = N/q$ of such supercells, and let's consider the spinor $\chi_u = \left(c_{qu}, c^\dagger_{qu}, c_{qu+1}, c^\dagger_{qu+1}, ..., c_{qu+(q-1)}, c^\dagger_{qu+(q-1)}\right)^T$. The Hamiltonian can be expressed as follows:</p>
 \begin{equation}
-    H = \sum_{u=0}^{L-1} \biggl[ \chi_u^\dagger H_{\text{local}} \chi_u + \left( \chi_u^\dagger H_{\text{hop}} \chi_{u+1} + {\rm h.c.}\right)
-    + \sum_{l=1}^{L-1}\left( \chi_u^\dagger H_{\text{l}} \chi_{u+l} + {\rm h.c.} \right) \biggl],
+    H = \sum_{u=0}^{L-1} \biggl[ \chi_u^\dagger H_{\text{local}} \chi_u + ( \chi_u^\dagger H_{\text{hop}} \chi_{u+1} + {\rm h.c.})
+    + \sum_{l=1}^{L-1}( \chi_u^\dagger H_{\text{l}} \chi_{u+l} + {\rm h.c.}) \biggl],
 \end{equation}<p>where,</p>
 \begin{equation}
 H_{\text{local}} = 
@@ -273,7 +273,7 @@ therefore:
 meaning that $kL = (2m + 1)\pi$ where $m$ takes values from $\{0,1,2,...L-1\}$.</p>
 <p>Now, if we do the Fourier transform of the Hamiltonian we obtain:</p>
 \begin{equation}
-    H = \sum_{k} \biggl[ \chi_k^\dagger H_\text{local} \chi_k + \left(e^{ik} \chi_k^\dagger H_\text{hop} \chi_k + {\rm h.c.}\right) + \sum_{l=1}^{L-1}\left(e^{ikl}\chi_k^\dagger H_{l} \chi_{k} + {\rm h.c.}\right)\biggl],
+    H = \sum_{k} \biggl[ \chi_k^\dagger H_\text{local} \chi_k + (e^{ik} \chi_k^\dagger H_\text{hop} \chi_k + {\rm h.c.}\right) + \sum_{l=1}^{L-1}\left(e^{ikl}\chi_k^\dagger H_{l} \chi_{k} + {\rm h.c.}\right)\biggl],
 \end{equation}<p>where we have used:
 \begin{equation}
 \sum_{u=0}^{L-1} e^{i(k-k')u} = L\delta_{kk'}.
