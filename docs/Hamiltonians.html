@@ -2,13 +2,11 @@
 
 title: HAMILTONIANS
 
-
 keywords: fastai
 sidebar: home_sidebar
 
 
 
-nb_path: "nbs/01_Hamiltonians.ipynb"
 ---
 <!--
 
@@ -163,8 +161,8 @@ with any value of alpha, Fn1/Fn and finite length. Here we use the Majorana basi
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since the system has a periodicity of $q$ sites, we can split it into supercells. Let's consider that we have $L = N/q$ of such supercells, and let's consider the spinor $\chi_u = \left(c_{qu}, c^\dagger_{qu}, c_{qu+1}, c^\dagger_{qu+1}, ..., c_{qu+(q-1)}, c^\dagger_{qu+(q-1)}\right)^T$. The Hamiltonian can be expressed as follows:</p>
 \begin{equation}
-    H = \sum_{u=0}^{L-1} \biggl[ \chi_u^\dagger H_{\text{local}} \chi_u + ( \chi_u^\dagger H_{\text{hop}} \chi_{u+1} + {\rm h.c.})
-    + \sum_{l=1}^{L-1}( \chi_u^\dagger H_{\text{l}} \chi_{u+l} + {\rm h.c.}) \biggl],
+    H = \sum_{u=0}^{L-1} \left[ \chi_u^\dagger H_{\text{local}} \chi_u + ( \chi_u^\dagger H_{\text{hop}} \chi_{u+1} + {\rm h.c.})
+    + \sum_{l=1}^{L-1}( \chi_u^\dagger H_{\text{l}} \chi_{u+l} + {\rm h.c.}) \right],
 \end{equation}<p>where,</p>
 \begin{equation}
 H_{\text{local}} = 
