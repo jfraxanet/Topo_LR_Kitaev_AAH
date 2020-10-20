@@ -270,7 +270,7 @@ therefore:
 meaning that $kL = (2m + 1)\pi$ where $m$ takes values from $\{0,1,2,...L-1\}$.</p>
 <p>Now, if we do the Fourier transform of the Hamiltonian we obtain:</p>
 \begin{equation}
-    H = \sum_{k} \biggl[ \chi_k^\dagger H_\text{local} \chi_k + (e^{ik} \chi_k^\dagger H_\text{hop} \chi_k + {\rm h.c.}\right) + \sum_{l=1}^{L-1}\left(e^{ikl}\chi_k^\dagger H_{l} \chi_{k} + {\rm h.c.}\right)\biggl],
+    H = \sum_{k} \left[ \chi_k^\dagger H_\text{local} \chi_k + \left(e^{ik} \chi_k^\dagger H_\text{hop} \chi_k + {\rm h.c.}\right) + \sum_{l=1}^{L-1}\left(e^{ikl}\chi_k^\dagger H_{l} \chi_{k} + {\rm h.c.}\right)\right],
 \end{equation}<p>where we have used:
 \begin{equation}
 \sum_{u=0}^{L-1} e^{i(k-k')u} = L\delta_{kk'}.
@@ -323,7 +323,7 @@ with any value of alpha, Fn1/Fn and finite length</p>
 <p>For the infinite system, $L$ goes to infinity. Then, we need to change $d_l = l$ and $d_{l,x,y} = lq-(x-y))$ because we are not using the anti-periodic boundary conditions. 
 Then, the Hamiltonian in momentum space looks as follows:</p>
 \begin{equation}
-    H = \sum_{k} \biggl[\chi_k^\dagger H_\text{local} \chi_k + \left(e^{ik}\chi_k^\dagger H_\text{hop} \chi_k + \text{h.c.}\right)  + \left(\chi_k^\dagger H_\text{inf} \chi_{k} + \text{h.c.}\right)\biggl]
+    H = \sum_{k} \left[\chi_k^\dagger H_\text{local} \chi_k + \left(e^{ik}\chi_k^\dagger H_\text{hop} \chi_k + \text{h.c.}\right)  + \left(\chi_k^\dagger H_\text{inf} \chi_{k} + \text{h.c.}\right)\right]
 \end{equation}<p>where:</p>
 \begin{equation}
 H_{l, inf} = 
