@@ -37,9 +37,9 @@ sidebar: home_sidebar
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In order to obtain the Hamiltonian in the momentum space, we start from the follwing Hamiltonian:</p>
-\begin{equation}\label{eq: hamiltonian}
+$$
     H = \sum_{n=0}^{N-1} \left [t \left (c^\dagger_{i+1}c_{i} + c^\dagger_{i}c_{i+1}\right) - \mu f(i)\left ( 2c^\dagger_{i}c_{i}-1\right) + \sum_{l=1}^{N-1}\frac{\Delta}{d^\alpha_l}\left (c^\dagger_{i+l}c^\dagger_{i} + c_{i}c_{i+l}\right)\right],
-\end{equation}<p>where $t$ is the hopping amplitude, $\mu$ is the chemical potential, $\Delta$ is the superconducting pairing amplitude and $c_{i}(c^\dagger_{i})$ are the annihilation (creation) operators at the $i$-th site of the chain. The superconducting pairing is taken to decay as a power law $l^{-\alpha}$, where $l$ denotes the distance between the sites and the scaling exponent $\alpha \in \mathbb{R}$. For a constant chemical potential $f(i)=1$, we recover the long-range Kitaev chain with homogeneous onsite potential. The AAH chemical potential corresponds to $f(i) = \cos\left (2 \pi n \frac{F_{n-1}}{F_{n}} + \phi \right )$, where $F_{n-1},F_n$ are integers from the Fibonacci sequence and $\phi$ is the phase. Therefore, our Hamiltonian has a periodicity of $F_n = q$ sites.</p>
+$$<p>where $t$ is the hopping amplitude, $\mu$ is the chemical potential, $\Delta$ is the superconducting pairing amplitude and $c_{i}(c^\dagger_{i})$ are the annihilation (creation) operators at the $i$-th site of the chain. The superconducting pairing is taken to decay as a power law $l^{-\alpha}$, where $l$ denotes the distance between the sites and the scaling exponent $\alpha \in \mathbb{R}$. For a constant chemical potential $f(i)=1$, we recover the long-range Kitaev chain with homogeneous onsite potential. The AAH chemical potential corresponds to $f(i) = \cos\left (2 \pi n \frac{F_{n-1}}{F_{n}} + \phi \right )$, where $F_{n-1},F_n$ are integers from the Fibonacci sequence and $\phi$ is the phase. Therefore, our Hamiltonian has a periodicity of $F_n = q$ sites.</p>
 
 </div>
 </div>
@@ -53,10 +53,10 @@ sidebar: home_sidebar
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's consider the following basis $\chi = \left(c_{0}, c^\dagger_{0}, c_{1}, c^\dagger_{1}, ..., c_{N-1}, c^\dagger_{N-1}\right)^T$. The Hamiltonian can be expressed as follows:</p>
-\begin{equation}
+$$
     H = \chi^\dagger H_N \chi
-\end{equation}<p>where:
-\begin{equation}
+$$<p>where:
+$$
 H_N = 
 \begin{pmatrix}
 A_0 &amp; B &amp; C_2 &amp; C_3 &amp; \cdots &amp; C_{N-2} &amp; -B^\dagger\\
@@ -66,28 +66,28 @@ C_2^\dagger &amp; B^\dagger &amp; A_2 &amp; B &amp; \cdots &amp; C_{N-2} &amp; C
 C_{N-2}^\dagger &amp; C_{N-3}^\dagger &amp; C_{N-4}^\dagger &amp; C_{N-5}^\dagger &amp; \cdots &amp; A_{N-2} &amp; B\\
 -B &amp; C_{N-2}^\dagger &amp; C_{N-3}^\dagger &amp; C_{N-4}^\dagger &amp; \cdots &amp; B^\dagger &amp; A_{N-1},
 \end{pmatrix}
-\end{equation}</p>
+$$</p>
 <p>where</p>
-\begin{equation}
+$$
 A_{j} = 
 \begin{pmatrix}
 -\mu f(j) &amp; 0 \\
 0 &amp; +\mu f(j)
 \end{pmatrix},
-\end{equation}\begin{equation}
+$$$$
 B = \begin{pmatrix}
 t/2 &amp; -\Delta \\
 +\Delta  &amp; -t/2
 \end{pmatrix},
-\end{equation}\begin{equation}
+$$$$
 C_l = \begin{pmatrix}
 0 &amp; -\Delta/d_l^\alpha \\
 +\Delta/d_l^\alpha  &amp; 0
 \end{pmatrix}.
-\end{equation}<p>and $d_l = \text{Min}(l, N-l)$. In order to obtain these results, we have considered anti-periodic boundary conditions. This means that our Hamiltonian has the following form:
-\begin{equation}
+$$<p>and $d_l = \text{Min}(l, N-l)$. In order to obtain these results, we have considered anti-periodic boundary conditions. This means that our Hamiltonian has the following form:
+$$
 H = \sum_{i=0}^{N-2} \frac{t}{2} \left (c_i^\dagger c_{i+1} - c_{i+1} c_i^\dagger + c_{i+1}^\dagger c_i - c_{i} c_{i+1}^\dagger\right) -\frac{t}{2}\left(c_{N-1}^\dagger c_0 - c_0 c_{N-1}^\dagger + c_0^\dagger c_{N-1} - c_{N-1} c_0^\dagger\right) + \sum_{i=0}^{N-1} \mu f(i)\left (c^\dagger_{i}c_{i}-c_{i}c^\dagger_{i}\right) +\sum_{i=0}^{N-1}\sum_{l=1}^{N-1-i} \frac{\Delta}{d^\alpha_l}\left (c_{i+1}^\dagger c_i^\dagger - c_i^\dagger c_{i+l}^\dagger + c_i c_{i+l} - c_{i+l} c_{i}\right).
-\end{equation}</p>
+$$</p>
 
 </div>
 </div>
@@ -160,11 +160,11 @@ with any value of alpha, Fn1/Fn and finite length. Here we use the Majorana basi
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since the system has a periodicity of $q$ sites, we can split it into supercells. Let's consider that we have $L = N/q$ of such supercells, and let's consider the spinor $\chi_u = \left(c_{qu}, c^\dagger_{qu}, c_{qu+1}, c^\dagger_{qu+1}, ..., c_{qu+(q-1)}, c^\dagger_{qu+(q-1)}\right)^T$. The Hamiltonian can be expressed as follows:</p>
-\begin{equation}
+$$
     H = \sum_{u=0}^{L-1} \left[ \chi_u^\dagger H_{\text{local}} \chi_u + ( \chi_u^\dagger H_{\text{hop}} \chi_{u+1} + {\rm h.c.})
     + \sum_{l=1}^{L-1}( \chi_u^\dagger H_{\text{l}} \chi_{u+l} + {\rm h.c.}) \right],
-\end{equation}<p>where,</p>
-\begin{equation}
+$$<p>where,</p>
+$$
 H_{\text{local}} = 
 \begin{pmatrix}
 A_0 &amp; B &amp; C_2 &amp; \cdots &amp; C_{q-1}\\
@@ -174,7 +174,7 @@ C_2^\dagger &amp; B^\dagger &amp; A_2  &amp; \cdots  &amp; C_{q-3}\\
 C_{q-2}^\dagger &amp; C_{q-3}^\dagger &amp; C_{q-4}^\dagger  &amp; \cdots  &amp; B\\
 C_{q-1}^\dagger &amp; C_{q-2}^\dagger &amp; C_{q-3}^\dagger &amp; \cdots &amp; A_{q-1}
 \end{pmatrix},
-\end{equation}\begin{equation}
+$$$$
 H_{\text{hop}} = 
 \begin{pmatrix}
 0 &amp; 0 &amp; \cdots &amp; 0\\
@@ -182,8 +182,8 @@ H_{\text{hop}} =
 \vdots   &amp; \vdots &amp; \ddots &amp; \vdots\\
 B' &amp; 0 &amp;  \cdots  &amp; 0
 \end{pmatrix},
-\end{equation}<p>and,</p>
-\begin{equation}
+$$<p>and,</p>
+$$
 H_{\text{l}} = 
 \begin{pmatrix}
 C_{l,0,0} &amp; C_{l,0,1} &amp; \cdots &amp; C_{l,0,q-1}\\
@@ -193,23 +193,23 @@ C_{l,2,0} &amp; C_{l,2,1} &amp; \cdots  &amp; C_{l,2,q-1}\\
 C_{l,q-2,0} &amp; C_{l,q-2,1} &amp; \cdots &amp;  C_{l,q-2,q-1}\\
 C_{l,q-1,0} &amp; C_{l,q-1,1} &amp; \cdots &amp; C_{l,q-1,q-1}
 \end{pmatrix},
-\end{equation}<p>where $B' = \frac{t}{2}\sigma_z$ and $C_{l,x,y} = -\frac{\Delta}{2d_{l,x,y}^{\alpha}} i\sigma_y$. For the system with APBC,</p>
-\begin{equation}
+$$<p>where $B' = \frac{t}{2}\sigma_z$ and $C_{l,x,y} = -\frac{\Delta}{2d_{l,x,y}^{\alpha}} i\sigma_y$. For the system with APBC,</p>
+$$
 d_{l,x,y} = \text{min}\left(lq-(x-y), N-(lq-(x-y))\right).
-\end{equation}<p>To obtain these results, we have imposed anti-periodic boundary conditions. This means that, for the local Hamiltonian we assume that $c_{uq+x+q} = -c_{uq+x}$. Then:</p>
-\begin{equation}
+$$<p>To obtain these results, we have imposed anti-periodic boundary conditions. This means that, for the local Hamiltonian we assume that $c_{uq+x+q} = -c_{uq+x}$. Then:</p>
+$$
 \sum_{u=0}^{L-1} \chi_u^\dagger H_{local} \chi_u = \sum_{u=0}^{L-1} \left[\sum_{x = 0}^{q-2} \frac{t}{2} \left (c_{uq+x}^\dagger c_{uq+x+1} - c_{uq+x+1} c_{uq+x}^\dagger + c_{uq+x+1}^\dagger c_{uq+x} - c_{uq+x} c_{uq+x+1}^\dagger\right) - \sum_{x=0}^{q-1} \mu f(uq+x)\left (c^\dagger_{uq+x}c_{uq+x}-c_{uq+x}c^\dagger_{uq+x}\right) + \sum_{x=0}^{q-1}\sum_{l=1}^{q-1-x} \frac{\Delta}{l^\alpha}\left (c_{uq+x+l}^\dagger c_{uq+x}^\dagger - c_{uq+x}^\dagger c_{uq+x+l}^\dagger + c_{uq+x} c_{uq+x+l} - c_{uq+x+l} c_{uq+x}\right)\right]
-\end{equation}<p>For the Hamiltonians connecting different supercells, we have to use that $c_{(u+L)q + x} = -c_{uq+x}$. Then, we obtain:</p>
-\begin{equation}
+$$<p>For the Hamiltonians connecting different supercells, we have to use that $c_{(u+L)q + x} = -c_{uq+x}$. Then, we obtain:</p>
+$$
 \sum_{u=0}^{L-1} \left[ \chi_u^\dagger H_{hop} \chi_{u+1} + h.c. \right]= \sum_{u=0}^{L-2} \left[\frac{t}{2} \left (c_{uq+(q-1)}^\dagger c_{(u+1)q} - c_{(u+1)q} c_{uq+(q-1)}^\dagger + c_{(u+1)q}^\dagger c_{uq+(q-1)} - c_{uq+(q-1)} c_{(u+1)q}^\dagger\right)\right] +  \frac{t}{2} \left (c_{N-1}^\dagger c_{0} - c_{0} c_{N-1}^\dagger + c_{0}^\dagger c_{N-1} - c_{N-1} c_{0}^\dagger\right)
-\end{equation}\begin{equation}
+$$$$
 \sum_{u=1}^{L-1} \sum_{l=1}^{L-1}\left[\chi_u^\dagger H_{l} \chi_{u+l} + h.c.\right] = \sum_{u=0}^{L-1} \sum_{l=1}^{L-1-u} \left[\sum_{x = 0}^{q-1}\sum_{x = 0}^{q-1} \frac{\Delta}{d_{l,x,y}^\alpha} \left (c_{(u+1)q+x}^\dagger c_{uq+y}^\dagger - c_{uq+y}^\dagger c_{(u+l)q+y}^\dagger + c_{uq+y} c_{(u+l)q+x} - c_{(u+l)q+x} c_{uq+y}\right)\right]
-\end{equation}<p>which can also be expressed as:</p>
-\begin{equation}
+$$<p>which can also be expressed as:</p>
+$$
 \sum_{u=0}^{L-1} \left[\frac{t}{2} \left (c_{uq+(q-1)}^\dagger c_{(u+1)q} - c_{(u+1)q} c_{uq+(q-1)}^\dagger + c_{(u+1)q}^\dagger c_{uq+(q-1)} - c_{uq+(q-1)} c_{(u+1)q}^\dagger\right)\right]
-\end{equation}\begin{equation}
+$$$$
 \sum_{u=0}^{L-1} \sum_{l=1}^{L-1} \left[\sum_{x = 0}^{q-1}\sum_{x = 0}^{q-1} \frac{\Delta}{2 d_{l,x,y}^\alpha} \left (c_{(u+1)q+x}^\dagger c_{uq+y}^\dagger - c_{uq+y}^\dagger c_{(u+l)q+y}^\dagger + c_{uq+y} c_{(u+l)q+x} - c_{(u+l)q+x} c_{uq+y}\right)\right]
-\end{equation}<p>if we explicitly impose that $c_{(u+L)q + x} = -c_{uq+x}$. We will see in the next section how this is done.</p>
+$$<p>if we explicitly impose that $c_{(u+L)q + x} = -c_{uq+x}$. We will see in the next section how this is done.</p>
 
 </div>
 </div>
@@ -256,25 +256,25 @@ with any value of alpha, Fn1/Fn and finite length</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now, we want to write the Hamiltonian in momentum space. We transform the spinor $\chi_u$ as follows:</p>
-\begin{eqnarray}
-    \chi_u = \frac{1}{\sqrt{L}} \sum_{k} e^{iku} \chi_k,
+$$
+    \chi_u = \frac{1}{\sqrt{L}} \sum_{k} e^{iku} \chi_k, \quad
     \chi_u^\dagger = \frac{1}{\sqrt{L}} \sum_{k} e^{-iku} \chi_k^\dagger,
-\end{eqnarray}<p>where $\chi_k= \left(c_{k,0}, c^\dagger_{-k,0}, c_{k, 1}, c^\dagger_{-k, 1}, ..., c_{k, q-1}, c^\dagger_{-k, q-1})\right)^T$. We need to find out which values of $k$ we are considering. Because of the anti-periodic boundary conditions, we want the following to hold:
-\begin{equation}
+$$<p>where $\chi_k= \left(c_{k,0}, c^\dagger_{-k,0}, c_{k, 1}, c^\dagger_{-k, 1}, ..., c_{k, q-1}, c^\dagger_{-k, q-1})\right)^T$. We need to find out which values of $k$ we are considering. Because of the anti-periodic boundary conditions, we want the following to hold:
+$$
     \chi_{u+L} = -\chi_{u},
-\end{equation}
+$$
 therefore:
-\begin{equation}
+$$
     \frac{1}{\sqrt{L}} \sum_{k} e^{ik(u+L)} \chi_k = -\frac{1}{\sqrt{L}} \sum_{k} e^{iku} \chi_k,
-\end{equation}
+$$
 meaning that $kL = (2m + 1)\pi$ where $m$ takes values from $\{0,1,2,...L-1\}$.</p>
 <p>Now, if we do the Fourier transform of the Hamiltonian we obtain:</p>
-\begin{equation}
+$$
     H = \sum_{k} \left[ \chi_k^\dagger H_\text{local} \chi_k + \left(e^{ik} \chi_k^\dagger H_\text{hop} \chi_k + {\rm h.c.}\right) + \sum_{l=1}^{L-1}\left(e^{ikl}\chi_k^\dagger H_{l} \chi_{k} + {\rm h.c.}\right)\right],
-\end{equation}<p>where we have used:
-\begin{equation}
+$$<p>where we have used:
+$$
 \sum_{u=0}^{L-1} e^{i(k-k')u} = L\delta_{kk'}.
-\end{equation}</p>
+$$</p>
 
 </div>
 </div>
@@ -322,10 +322,10 @@ with any value of alpha, Fn1/Fn and finite length</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For the infinite system, $L$ goes to infinity. Then, we need to change $d_l = l$ and $d_{l,x,y} = lq-(x-y))$ because we are not using the anti-periodic boundary conditions. 
 Then, the Hamiltonian in momentum space looks as follows:</p>
-\begin{equation}
+$$
     H = \sum_{k} \left[\chi_k^\dagger H_\text{local} \chi_k + \left(e^{ik}\chi_k^\dagger H_\text{hop} \chi_k + \text{h.c.}\right)  + \left(\chi_k^\dagger H_\text{inf} \chi_{k} + \text{h.c.}\right)\right]
-\end{equation}<p>where:</p>
-\begin{equation}
+$$<p>where:</p>
+$$
 H_{l, inf} = 
 \begin{pmatrix}
 C_{0,0} &amp; C_{0,1} &amp; C_{0,2} &amp; C_{0,3} &amp; \cdots &amp; C_{0,q-2} &amp; C_{0,q-1}\\
@@ -335,10 +335,10 @@ C_{2,0} &amp; C_{2,1} &amp; C_{2,2} &amp; C_{2,3} &amp; \cdots &amp; C_{2,q-2} &
 C_{q-2,0} &amp; C_{q-2,1} &amp; C_{q-2,2} &amp; C_{q-2,3} &amp; \cdots &amp; C_{q-2,q-2} &amp; C_{q-2,q-1}\\
 C_{q-1,0} &amp; C_{q-1,1} &amp; C_{q-1,2} &amp; C_{q-1,3} &amp; \cdots &amp; C_{q-1,q-2} &amp; C_{q-1,q-1}
 \end{pmatrix},
-\end{equation}<p>where $C_{x,y} = ig_{xy}\sigma_y$. The function $g_{xy}$ is defined as follows</p>
-\begin{eqnarray}
+$$<p>where $C_{x,y} = ig_{xy}\sigma_y$. The function $g_{xy}$ is defined as follows</p>
+$$
 g_{xy} = -\sum_{l=1}^{\infty} \frac{\Delta e^{ikl}}{[q-(x-y)]^\alpha}  = \frac{e^{ik}}{q^{\alpha}} \text{HLP}_{\alpha} \left(k, q, x-y\right),
-\end{eqnarray}<p>where HLP is the Hurwitz Lerth Phi function, also called the Lerch trascendent function.</p>
+$$<p>where HLP is the Hurwitz Lerth Phi function, also called the Lerch trascendent function.</p>
 
 </div>
 </div>
