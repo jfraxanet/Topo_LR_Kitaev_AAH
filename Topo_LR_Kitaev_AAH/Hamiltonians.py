@@ -3,7 +3,7 @@
 __all__ = ['H_OBC_Kitaev_LR_QP', 'H_OBC_Majoranas_Kitaev_LR_QP', 'H_APBC_Kitaev_LR_QP', 'H_Kitaev_LR_QP',
            'h_chiral_Kitaev_LR_QP', 'H_Kitaev_LR_QP_inf', 'h_chiral_Kitaev_LR_QP_inf', 'H_pbc_sp',
            'd_h_chiral_Kitaev_LR_QP_inf', 'd_H_pbc_sp', 'HLP_d', 'd_k_H_Kitaev_LR_QP_inf', 'd_phase_H_Kitaev_LR_QP_inf',
-           'Fibonacci', 'rot_sigma_y', 'f', 'df', 'HLP']
+           'Fibonacci', 'df', 'HLP', 'rot_sigma_y']
 
 # Cell
 
@@ -556,24 +556,7 @@ def Fibonacci(iterations):
     return Fn1, Fn
 
 
-def rot_sigma_y(pvec, psi, Fn):
-
-    '''Rotation around sigma y of an angle psi'''
-
-    a = np.array([[np.cos(psi/2)-1j*pvec[2]*np.sin(psi/2), (-1j*pvec[0]-pvec[1])*np.sin(psi/2)],
-                  [(-1j*pvec[0]+pvec[1])*np.sin(psi/2), np.cos(psi/2)+1j*pvec[2]*np.sin(psi/2)]])
-    b = np.identity(Fn)
-
-    return np.kron(b,a)
-
-
-def f(k, alpha):
-
-    '''Function f(k,alpha) in terms of the polylog functions'''
-
-    f = -1j/2*(polylog(alpha,np.exp(1j*k))-polylog(alpha, np.exp(-1j*k)))
-    return float(f.real) + 1j*float(f.imag)
-
+# Cell
 
 def df(k, alpha):
 
@@ -589,3 +572,15 @@ def HLP(k, alpha, Fn, x, y):
 
     f = lerchphi(np.exp(1j*k),alpha,(Fn+(y-x))/Fn)
     return np.float(re(f))+ 1j*np.float(im(f))
+
+# Cell
+
+def rot_sigma_y(pvec, psi, Fn):
+
+    '''Rotation around sigma y of an angle psi'''
+
+    a = np.array([[np.cos(psi/2)-1j*pvec[2]*np.sin(psi/2), (-1j*pvec[0]-pvec[1])*np.sin(psi/2)],
+                  [(-1j*pvec[0]+pvec[1])*np.sin(psi/2), np.cos(psi/2)+1j*pvec[2]*np.sin(psi/2)]])
+    b = np.identity(Fn)
+
+    return np.kron(b,a)
