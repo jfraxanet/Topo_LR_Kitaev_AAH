@@ -1,6 +1,6 @@
 ---
 
-title: HAMILTONIANS
+title: 1. HAMILTONIANS
 
 keywords: fastai
 sidebar: home_sidebar
@@ -36,7 +36,7 @@ sidebar: home_sidebar
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to obtain the Hamiltonian in the momentum space, we start from the follwing Hamiltonian:</p>
+<p>We start from the follwing expression of the Hamiltonian:</p>
 $$
     H = \sum_{n=0}^{N-1} \left [t \left (c^\dagger_{i+1}c_{i} + c^\dagger_{i}c_{i+1}\right) - \mu f(i)\left ( 2c^\dagger_{i}c_{i}-1\right) + \sum_{l=1}^{N-1}\frac{\Delta}{d^\alpha_l}\left (c^\dagger_{i+l}c^\dagger_{i} + c_{i}c_{i+l}\right)\right],
 $$<p>where $t$ is the hopping amplitude, $\mu$ is the chemical potential, $\Delta$ is the superconducting pairing amplitude and $c_{i}(c^\dagger_{i})$ are the annihilation (creation) operators at the $i$-th site of the chain. The superconducting pairing is taken to decay as a power law $l^{-\alpha}$, where $l$ denotes the distance between the sites and the scaling exponent $\alpha \in \mathbb{R}$. For a constant chemical potential $f(i)=1$, we recover the long-range Kitaev chain with homogeneous onsite potential. The AAH chemical potential corresponds to $f(i) = \cos\left (2 \pi n \frac{F_{n-1}}{F_{n}} + \phi \right )$, where $F_{n-1},F_n$ are integers from the Fibonacci sequence and $\phi$ is the phase. Therefore, our Hamiltonian has a periodicity of $F_n = q$ sites.</p>
@@ -46,7 +46,7 @@ $$<p>where $t$ is the hopping amplitude, $\mu$ is the chemical potential, $\Delt
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.1-REAL-SPACE-HAMILTONIAN-WITH-OBC">1.1 REAL SPACE HAMILTONIAN WITH OBC<a class="anchor-link" href="#1.1-REAL-SPACE-HAMILTONIAN-WITH-OBC"> </a></h2>
+<h2 id="1.1-Real-space-Hamiltonian-with-open-boundary-conditions-(OBC)">1.1 Real space Hamiltonian with open boundary conditions (OBC)<a class="anchor-link" href="#1.1-Real-space-Hamiltonian-with-open-boundary-conditions-(OBC)"> </a></h2>
 </div>
 </div>
 </div>
@@ -59,12 +59,12 @@ $$<p>where:
 $$
 H_N = 
 \begin{pmatrix}
-A_0 &amp; B &amp; C_2 &amp; C_3 &amp; \cdots &amp; C_{N-2} &amp; -B^\dagger\\
+A_0 &amp; B &amp; C_2 &amp; C_3 &amp; \cdots &amp; C_{N-2} &amp; C_{N-1}\\
 B^\dagger &amp; A_1 &amp; B &amp; C_2 &amp; \cdots &amp; C_{N-3} &amp; C_{N-2}\\
 C_2^\dagger &amp; B^\dagger &amp; A_2 &amp; B &amp; \cdots &amp; C_{N-2} &amp; C_{N-3}\\
 \vdots  &amp; \vdots  &amp; \vdots  &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots\\
 C_{N-2}^\dagger &amp; C_{N-3}^\dagger &amp; C_{N-4}^\dagger &amp; C_{N-5}^\dagger &amp; \cdots &amp; A_{N-2} &amp; B\\
--B &amp; C_{N-2}^\dagger &amp; C_{N-3}^\dagger &amp; C_{N-4}^\dagger &amp; \cdots &amp; B^\dagger &amp; A_{N-1},
+C_{N-1}^\dagger &amp; C_{N-2}^\dagger &amp; C_{N-3}^\dagger &amp; C_{N-4}^\dagger &amp; \cdots &amp; B^\dagger &amp; A_{N-1},
 \end{pmatrix}
 $$</p>
 <p>where</p>
@@ -81,13 +81,10 @@ t/2 &amp; -\Delta \\
 \end{pmatrix},
 $$$$
 C_l = \begin{pmatrix}
-0 &amp; -\Delta/d_l^\alpha \\
-+\Delta/d_l^\alpha  &amp; 0
+0 &amp; -\Delta/l^\alpha \\
++\Delta/l^\alpha  &amp; 0
 \end{pmatrix}.
-$$<p>and $d_l = \text{Min}(l, N-l)$. In order to obtain these results, we have considered anti-periodic boundary conditions. This means that our Hamiltonian has the following form:
-$$
-H = \sum_{i=0}^{N-2} \frac{t}{2} \left (c_i^\dagger c_{i+1} - c_{i+1} c_i^\dagger + c_{i+1}^\dagger c_i - c_{i} c_{i+1}^\dagger\right) -\frac{t}{2}\left(c_{N-1}^\dagger c_0 - c_0 c_{N-1}^\dagger + c_0^\dagger c_{N-1} - c_{N-1} c_0^\dagger\right) + \sum_{i=0}^{N-1} \mu f(i)\left (c^\dagger_{i}c_{i}-c_{i}c^\dagger_{i}\right) +\sum_{i=0}^{N-1}\sum_{l=1}^{N-1-i} \frac{\Delta}{d^\alpha_l}\left (c_{i+1}^\dagger c_i^\dagger - c_i^\dagger c_{i+l}^\dagger + c_i c_{i+l} - c_{i+l} c_{i}\right).
-$$</p>
+$$<p>We compute the Hamiltonian with OBC both in de BdG and the Majorana basis.</p>
 
 </div>
 </div>
@@ -113,7 +110,7 @@ $$</p>
 <h4 id="H_OBC_Kitaev_LR_QP" class="doc_header"><code>H_OBC_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_OBC_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Compute the real space Hamiltonian with OBC for the Kitaev chain
-with any value of alpha, Fn1/Fn and finite length</p>
+with any value of alpha, Fn1/Fn and finite length L.</p>
 
 </div>
 
@@ -139,7 +136,7 @@ with any value of alpha, Fn1/Fn and finite length</p>
 <h4 id="H_OBC_Majoranas_Kitaev_LR_QP" class="doc_header"><code>H_OBC_Majoranas_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_OBC_Majoranas_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Compute the real space Hamiltonian with OBC for the Kitaev chain
-with any value of alpha, Fn1/Fn and finite length. Here we use the Majorana basis.</p>
+with any value of alpha, Fn1/Fn and finite length L. Here we use the Majorana basis.</p>
 
 </div>
 
@@ -153,7 +150,18 @@ with any value of alpha, Fn1/Fn and finite length. Here we use the Majorana basi
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.2-REAL-SPACE-HAMILTONIAN-WITH-APBC">1.2 REAL SPACE HAMILTONIAN WITH APBC<a class="anchor-link" href="#1.2-REAL-SPACE-HAMILTONIAN-WITH-APBC"> </a></h2>
+<h2 id="1.2-Real-space-Hamiltonian-with-anti-periodic-boundary-conditions-(APBC)">1.2 Real space Hamiltonian with anti-periodic boundary conditions (APBC)<a class="anchor-link" href="#1.2-Real-space-Hamiltonian-with-anti-periodic-boundary-conditions-(APBC)"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The Hamiltonian with anti-periodic boundary conditions takes the following form:
+$$
+H = \sum_{i=0}^{N-2} \frac{t}{2} \left (c_i^\dagger c_{i+1} - c_{i+1} c_i^\dagger + c_{i+1}^\dagger c_i - c_{i} c_{i+1}^\dagger\right) -\frac{t}{2}\left(c_{N-1}^\dagger c_0 - c_0 c_{N-1}^\dagger + c_0^\dagger c_{N-1} - c_{N-1} c_0^\dagger\right)\\ + \sum_{i=0}^{N-1} \mu f(i)\left (c^\dagger_{i}c_{i}-c_{i}c^\dagger_{i}\right) +\sum_{i=0}^{N-1}\sum_{l=1}^{N-1-i} \frac{\Delta}{d^\alpha_l}\left (c_{i+1}^\dagger c_i^\dagger - c_i^\dagger c_{i+l}^\dagger + c_i c_{i+l} - c_{i+l} c_{i}\right).
+$$</p>
+<p>where $d_l = \text{min}(l, N-l)$.</p>
+
 </div>
 </div>
 </div>
@@ -193,23 +201,10 @@ C_{l,2,0} &amp; C_{l,2,1} &amp; \cdots  &amp; C_{l,2,q-1}\\
 C_{l,q-2,0} &amp; C_{l,q-2,1} &amp; \cdots &amp;  C_{l,q-2,q-1}\\
 C_{l,q-1,0} &amp; C_{l,q-1,1} &amp; \cdots &amp; C_{l,q-1,q-1}
 \end{pmatrix},
-$$<p>where $B' = \frac{t}{2}\sigma_z$ and $C_{l,x,y} = -\frac{\Delta}{2d_{l,x,y}^{\alpha}} i\sigma_y$. For the system with APBC,</p>
+$$<p>where $B' = \frac{t}{2}\sigma_z$ and $C_{l,x,y} = -\frac{\Delta}{2d_{l,x,y}^{\alpha}} i\sigma_y$. Now,</p>
 $$
 d_{l,x,y} = \text{min}\left(lq-(x-y), N-(lq-(x-y))\right).
-$$<p>To obtain these results, we have imposed anti-periodic boundary conditions. This means that, for the local Hamiltonian we assume that $c_{uq+x+q} = -c_{uq+x}$. Then:</p>
-$$
-\sum_{u=0}^{L-1} \chi_u^\dagger H_{local} \chi_u = \sum_{u=0}^{L-1} \left[\sum_{x = 0}^{q-2} \frac{t}{2} \left (c_{uq+x}^\dagger c_{uq+x+1} - c_{uq+x+1} c_{uq+x}^\dagger + c_{uq+x+1}^\dagger c_{uq+x} - c_{uq+x} c_{uq+x+1}^\dagger\right) - \sum_{x=0}^{q-1} \mu f(uq+x)\left (c^\dagger_{uq+x}c_{uq+x}-c_{uq+x}c^\dagger_{uq+x}\right) + \sum_{x=0}^{q-1}\sum_{l=1}^{q-1-x} \frac{\Delta}{l^\alpha}\left (c_{uq+x+l}^\dagger c_{uq+x}^\dagger - c_{uq+x}^\dagger c_{uq+x+l}^\dagger + c_{uq+x} c_{uq+x+l} - c_{uq+x+l} c_{uq+x}\right)\right]
-$$<p>For the Hamiltonians connecting different supercells, we have to use that $c_{(u+L)q + x} = -c_{uq+x}$. Then, we obtain:</p>
-$$
-\sum_{u=0}^{L-1} \left[ \chi_u^\dagger H_{hop} \chi_{u+1} + h.c. \right]= \sum_{u=0}^{L-2} \left[\frac{t}{2} \left (c_{uq+(q-1)}^\dagger c_{(u+1)q} - c_{(u+1)q} c_{uq+(q-1)}^\dagger + c_{(u+1)q}^\dagger c_{uq+(q-1)} - c_{uq+(q-1)} c_{(u+1)q}^\dagger\right)\right] +  \frac{t}{2} \left (c_{N-1}^\dagger c_{0} - c_{0} c_{N-1}^\dagger + c_{0}^\dagger c_{N-1} - c_{N-1} c_{0}^\dagger\right)
-$$$$
-\sum_{u=1}^{L-1} \sum_{l=1}^{L-1}\left[\chi_u^\dagger H_{l} \chi_{u+l} + h.c.\right] = \sum_{u=0}^{L-1} \sum_{l=1}^{L-1-u} \left[\sum_{x = 0}^{q-1}\sum_{x = 0}^{q-1} \frac{\Delta}{d_{l,x,y}^\alpha} \left (c_{(u+1)q+x}^\dagger c_{uq+y}^\dagger - c_{uq+y}^\dagger c_{(u+l)q+y}^\dagger + c_{uq+y} c_{(u+l)q+x} - c_{(u+l)q+x} c_{uq+y}\right)\right]
-$$<p>which can also be expressed as:</p>
-$$
-\sum_{u=0}^{L-1} \left[\frac{t}{2} \left (c_{uq+(q-1)}^\dagger c_{(u+1)q} - c_{(u+1)q} c_{uq+(q-1)}^\dagger + c_{(u+1)q}^\dagger c_{uq+(q-1)} - c_{uq+(q-1)} c_{(u+1)q}^\dagger\right)\right]
-$$$$
-\sum_{u=0}^{L-1} \sum_{l=1}^{L-1} \left[\sum_{x = 0}^{q-1}\sum_{x = 0}^{q-1} \frac{\Delta}{2 d_{l,x,y}^\alpha} \left (c_{(u+1)q+x}^\dagger c_{uq+y}^\dagger - c_{uq+y}^\dagger c_{(u+l)q+y}^\dagger + c_{uq+y} c_{(u+l)q+x} - c_{(u+l)q+x} c_{uq+y}\right)\right]
-$$<p>if we explicitly impose that $c_{(u+L)q + x} = -c_{uq+x}$. We will see in the next section how this is done.</p>
+$$<p>Note that in order to impose anti-periodic boundary conditions, we have used that $c_{uq+x+q} = -c_{uq+x}$ in $H_{\text{local}}$ and $c_{(u+L)q + x} = -c_{uq+x}$ in $H_{\text{hop}}$ and $H_{\text{l}}$.</p>
 
 </div>
 </div>
@@ -235,7 +230,7 @@ $$<p>if we explicitly impose that $c_{(u+L)q + x} = -c_{uq+x}$. We will see in t
 <h4 id="H_APBC_Kitaev_LR_QP" class="doc_header"><code>H_APBC_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L115" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_APBC_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Compute the real space Hamiltonian with APBC for the Kitaev chain
-with any value of alpha, Fn1/Fn and finite length</p>
+with any value of alpha, Fn1/Fn and finite length L.</p>
 
 </div>
 
@@ -249,7 +244,7 @@ with any value of alpha, Fn1/Fn and finite length</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.3-MOMENTUM-SPACE-HAMILTONIAN-FOR-FINITE-LENGTH">1.3 MOMENTUM SPACE HAMILTONIAN FOR FINITE LENGTH<a class="anchor-link" href="#1.3-MOMENTUM-SPACE-HAMILTONIAN-FOR-FINITE-LENGTH"> </a></h2>
+<h2 id="1.3-Momentum-space-Hamiltonian-for-a-finite-system.">1.3 Momentum space Hamiltonian for a finite system.<a class="anchor-link" href="#1.3-Momentum-space-Hamiltonian-for-a-finite-system."> </a></h2>
 </div>
 </div>
 </div>
@@ -259,7 +254,8 @@ with any value of alpha, Fn1/Fn and finite length</p>
 $$
     \chi_u = \frac{1}{\sqrt{L}} \sum_{k} e^{iku} \chi_k, \quad
     \chi_u^\dagger = \frac{1}{\sqrt{L}} \sum_{k} e^{-iku} \chi_k^\dagger,
-$$<p>where $\chi_k= \left(c_{k,0}, c^\dagger_{-k,0}, c_{k, 1}, c^\dagger_{-k, 1}, ..., c_{k, q-1}, c^\dagger_{-k, q-1})\right)^T$. We need to find out which values of $k$ we are considering. Because of the anti-periodic boundary conditions, we want the following to hold:
+$$<p>where $\chi_k= \left(c_{k,0}, c^\dagger_{-k,0}, c_{k, 1}, c^\dagger_{-k, 1}, ..., c_{k, q-1}, c^\dagger_{-k, q-1})\right)^T$. 
+For finite systems, there is a discrete set of momentums $k$ allowed in the system. Because of the anti-periodic boundary conditions, we want the following to hold:
 $$
     \chi_{u+L} = -\chi_{u},
 $$
@@ -300,7 +296,7 @@ $$</p>
 <h4 id="H_Kitaev_LR_QP" class="doc_header"><code>H_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L171" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>rot</code></strong>=<em><code>True</code></em>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Compute the momentum Hamiltonian with APBC for the Kitaev chain
-with any value of alpha, Fn1/Fn and finite length</p>
+with any value of alpha, Fn1/Fn and finite length L.</p>
 
 </div>
 
@@ -314,14 +310,46 @@ with any value of alpha, Fn1/Fn and finite length</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.4-MOMENTUM-SPACE-HAMILTONIAN-FOR-INFINITE-SYSTEM">1.4 MOMENTUM SPACE HAMILTONIAN FOR INFINITE SYSTEM<a class="anchor-link" href="#1.4-MOMENTUM-SPACE-HAMILTONIAN-FOR-INFINITE-SYSTEM"> </a></h2>
+<h3 id="1.31-Block-off-diagonal-Hamiltonian-for-the-finite-system">1.31 Block-off diagonal Hamiltonian for the finite system<a class="anchor-link" href="#1.31-Block-off-diagonal-Hamiltonian-for-the-finite-system"> </a></h3>
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="h_chiral_Kitaev_LR_QP" class="doc_header"><code>h_chiral_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L254" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>h_chiral_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+<p>Computes one block of the off-diagonal Hamiltonian in momentum space for a finite system with APBC.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For the infinite system, $L$ goes to infinity. Then, we need to change $d_l = l$ and $d_{l,x,y} = lq-(x-y))$ because we are not using the anti-periodic boundary conditions. 
-Then, the Hamiltonian in momentum space looks as follows:</p>
+<p>For the infinite system, $L$ goes to infinity. Then, we need to change $d_l = l$ and $d_{l,x,y} = lq-(x-y))$ because the anti-periodic boundary conditions do not need to be explicitly imposed anymore.
+The Hamiltonian in momentum space looks as follows:</p>
 $$
     H = \sum_{k} \left[\chi_k^\dagger H_\text{local} \chi_k + \left(e^{ik}\chi_k^\dagger H_\text{hop} \chi_k + \text{h.c.}\right)  + \left(\chi_k^\dagger H_\text{inf} \chi_{k} + \text{h.c.}\right)\right]
 $$<p>where:</p>
@@ -361,7 +389,7 @@ $$<p>where HLP is the Hurwitz Lerth Phi function, also called the Lerch trascend
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="H_Kitaev_LR_QP_inf" class="doc_header"><code>H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L254" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="H_Kitaev_LR_QP_inf" class="doc_header"><code>H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L302" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Compute the momentum Hamiltonian with APBC for the Kitaev chain
 with any value of alpha and Fn1/Fn. The system is infinite.</p>
@@ -376,97 +404,9 @@ with any value of alpha and Fn1/Fn. The system is infinite.</p>
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_k_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_k_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L320" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_k_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-<p>Analytical derivative of the Hamiltonian for k in momentum space for an infinite system.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_phase_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_phase_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L357" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_phase_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-<p>Analytical derivative of the Hamiltonian for phi in momentum space for an infinite system.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.5-UPPER-RIGHT-BLOCK-OF-THE-CHIRAL-HAMILTONIAN---FINITE-SYSTEM">1.5 UPPER-RIGHT BLOCK OF THE CHIRAL HAMILTONIAN - FINITE SYSTEM<a class="anchor-link" href="#1.5-UPPER-RIGHT-BLOCK-OF-THE-CHIRAL-HAMILTONIAN---FINITE-SYSTEM"> </a></h2>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="h_chiral_Kitaev_LR_QP" class="doc_header"><code>h_chiral_Kitaev_LR_QP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L395" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>h_chiral_Kitaev_LR_QP</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>length</code></strong>, <strong><code>AA</code></strong>=<em><code>False</code></em>)</p>
-</blockquote>
-<p>Computes one block of the off-diagonal Hamiltonian in momentum space for a finite system with APBC</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.5-UPPER-RIGHT-BLOCK-OF-THE-CHIRAL-HAMILTONIAN---INFINITE-SYSTEM">1.5 UPPER-RIGHT BLOCK OF THE CHIRAL HAMILTONIAN - INFINITE SYSTEM<a class="anchor-link" href="#1.5-UPPER-RIGHT-BLOCK-OF-THE-CHIRAL-HAMILTONIAN---INFINITE-SYSTEM"> </a></h2><p>** I separated HLP_d and the infinite analytical expressions for the Hamiltonian in order to make the code more efficient</p>
+<h3 id="1.41-Block-off-diagonal-Hamiltonian-for-the-infinite-system">1.41 Block-off diagonal Hamiltonian for the infinite system<a class="anchor-link" href="#1.41-Block-off-diagonal-Hamiltonian-for-the-infinite-system"> </a></h3><p>HLP_d and the infinite analytical expressions for the Hamiltonian are separated in order to make the code more efficient</p>
 
 </div>
 </div>
@@ -489,7 +429,7 @@ with any value of alpha and Fn1/Fn. The system is infinite.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="h_chiral_Kitaev_LR_QP_inf" class="doc_header"><code>h_chiral_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L443" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>h_chiral_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>AA</code></strong>, <strong><code>H_pbc_delta</code></strong>)</p>
+<h4 id="h_chiral_Kitaev_LR_QP_inf" class="doc_header"><code>h_chiral_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L369" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>h_chiral_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>AA</code></strong>, <strong><code>H_pbc_delta</code></strong>)</p>
 </blockquote>
 <p>Computes one block of the off-diagonal Hamiltonian in momentum space for an infinite system</p>
 
@@ -514,7 +454,7 @@ with any value of alpha and Fn1/Fn. The system is infinite.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="H_pbc_sp" class="doc_header"><code>H_pbc_sp</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L479" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_pbc_sp</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>)</p>
+<h4 id="H_pbc_sp" class="doc_header"><code>H_pbc_sp</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L405" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>H_pbc_sp</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>)</p>
 </blockquote>
 <p>Computes the analytical expression of the long-range infinite part of
 the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
@@ -540,7 +480,7 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_h_chiral_Kitaev_LR_QP_inf" class="doc_header"><code>d_h_chiral_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L498" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_h_chiral_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>AA</code></strong>, <strong><code>d_H_pbc_delta</code></strong>)</p>
+<h4 id="d_h_chiral_Kitaev_LR_QP_inf" class="doc_header"><code>d_h_chiral_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L424" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_h_chiral_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>AA</code></strong>, <strong><code>d_H_pbc_delta</code></strong>)</p>
 </blockquote>
 <p>Computes the analytical derivative of k of one block of the off-diagonal Hamiltonian
 in momentum space for an infinite system</p>
@@ -566,7 +506,7 @@ in momentum space for an infinite system</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="d_H_pbc_sp" class="doc_header"><code>d_H_pbc_sp</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L516" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_H_pbc_sp</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>)</p>
+<h4 id="d_H_pbc_sp" class="doc_header"><code>d_H_pbc_sp</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L442" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_H_pbc_sp</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>)</p>
 </blockquote>
 <p>Computes the analytical derivative of the long-range infinite part of
 the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
@@ -592,7 +532,7 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="HLP_d" class="doc_header"><code>HLP_d</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L535" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>HLP_d</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>, <strong><code>Fn</code></strong>, <strong><code>dist</code></strong>)</p>
+<h4 id="HLP_d" class="doc_header"><code>HLP_d</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L461" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>HLP_d</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>, <strong><code>Fn</code></strong>, <strong><code>dist</code></strong>)</p>
 </blockquote>
 <p>Closed form of sum of exponents using HLP function. dist is y-x</p>
 
@@ -608,7 +548,7 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="OTHER-FUNCTIONS">OTHER FUNCTIONS<a class="anchor-link" href="#OTHER-FUNCTIONS"> </a></h1>
+<h3 id="1.42-Analytical-derivatives-of-the-infinite-system-Hamiltonian">1.42 Analytical derivatives of the infinite system Hamiltonian<a class="anchor-link" href="#1.42-Analytical-derivatives-of-the-infinite-system-Hamiltonian"> </a></h3>
 </div>
 </div>
 </div>
@@ -630,7 +570,70 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Fibonacci" class="doc_header"><code>Fibonacci</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L544" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fibonacci</code>(<strong><code>iterations</code></strong>)</p>
+<h4 id="d_k_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_k_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L470" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_k_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
+</blockquote>
+<p>Analytical derivative of the infinite system Hamiltonian in terms of the momentum k.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="d_phase_H_Kitaev_LR_QP_inf" class="doc_header"><code>d_phase_H_Kitaev_LR_QP_inf</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L507" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>d_phase_H_Kitaev_LR_QP_inf</code>(<strong><code>params</code></strong>, <strong><code>k</code></strong>, <strong><code>mu</code></strong>, <strong><code>rot</code></strong>=<em><code>False</code></em>, <strong><code>AA</code></strong>=<em><code>True</code></em>)</p>
+</blockquote>
+<p>Analytical derivative of the infinite system Hamiltonian in terms of the phase phi.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="2.-OTHER-FUNCTIONS">2. OTHER FUNCTIONS<a class="anchor-link" href="#2.-OTHER-FUNCTIONS"> </a></h1>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="Fibonacci" class="doc_header"><code>Fibonacci</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L545" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Fibonacci</code>(<strong><code>iterations</code></strong>)</p>
 </blockquote>
 <p>Return Fibonacci sequence number depending on the iterations</p>
 
@@ -655,7 +658,7 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="rot_sigma_y" class="doc_header"><code>rot_sigma_y</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L558" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>rot_sigma_y</code>(<strong><code>pvec</code></strong>, <strong><code>psi</code></strong>, <strong><code>Fn</code></strong>)</p>
+<h4 id="rot_sigma_y" class="doc_header"><code>rot_sigma_y</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L559" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>rot_sigma_y</code>(<strong><code>pvec</code></strong>, <strong><code>psi</code></strong>, <strong><code>Fn</code></strong>)</p>
 </blockquote>
 <p>Rotation around sigma y of an angle psi</p>
 
@@ -680,7 +683,7 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="f" class="doc_header"><code>f</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L569" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>f</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>)</p>
+<h4 id="f" class="doc_header"><code>f</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L570" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>f</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>)</p>
 </blockquote>
 <p>Function f(k,alpha) in terms of the polylog functions</p>
 
@@ -705,7 +708,7 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="df" class="doc_header"><code>df</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L577" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>df</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>)</p>
+<h4 id="df" class="doc_header"><code>df</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L578" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>df</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>)</p>
 </blockquote>
 <p>Derivative of function f(k,alpha) in terms of the polylog functions</p>
 
@@ -730,7 +733,7 @@ the off-diagonal Hamiltonian. Does not depend on the chemical potential.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="HLP" class="doc_header"><code>HLP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L585" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>HLP</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>, <strong><code>Fn</code></strong>, <strong><code>x</code></strong>, <strong><code>y</code></strong>)</p>
+<h4 id="HLP" class="doc_header"><code>HLP</code><a href="https://github.com/jfraxanet/Topo_LR_Kitaev_AAH/tree/master/Topo_LR_Kitaev_AAH/Hamiltonians.py#L586" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>HLP</code>(<strong><code>k</code></strong>, <strong><code>alpha</code></strong>, <strong><code>Fn</code></strong>, <strong><code>x</code></strong>, <strong><code>y</code></strong>)</p>
 </blockquote>
 <p>Closed form of sum of exponens using HLP function</p>
 

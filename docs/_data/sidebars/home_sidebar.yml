@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: HAMILTONIANS
+      title: 1. HAMILTONIANS
       url: /Hamiltonians
     - output: web,pdf
       title: WINDING NUMBER COMPUTATIONS
