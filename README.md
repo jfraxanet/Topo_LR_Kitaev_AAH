@@ -2,8 +2,6 @@
 
 
 
-[![DOI](https://zenodo.org/badge/273284532.svg)](https://zenodo.org/badge/latestdoi/273284532)
-
 > By Joana Fraxanet, Utso Bhattacharya, Tobias Grass, Debraj Rakshit, Maciej Lewenstein and Alexandre Dauphin
 
 ## Content
