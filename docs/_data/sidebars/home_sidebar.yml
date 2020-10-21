@@ -10,10 +10,10 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: 1. HAMILTONIANS
+      title: HAMILTONIANS
       url: /Hamiltonians
     - output: web,pdf
-      title: WINDING NUMBER COMPUTATIONS
+      title: TOPOLOGICAL INVARIANTS
       url: /Winding_num
     output: web
     title: Topo_LR_Kitaev_AAH
