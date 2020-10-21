@@ -1,6 +1,6 @@
 # Topological properties of the long-range Kitaev chain with Aubry-André-Harper modulation
 
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4115718.svg)](https://doi.org/10.5281/zenodo.4115718)
 
 > By Joana Fraxanet, Utso Bhattacharya, Tobias Grass, Debraj Rakshit, Maciej Lewenstein and Alexandre Dauphin
 
